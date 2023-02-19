@@ -5,7 +5,6 @@ import Screen from "./components/Screen/Screen";
 import ButtonBox from "./components/ButtonBox/ButtonBox";
 import Button from "./components/Button/Button";
 
-
 const btnValues = [
   ["C", "+-", "%", "/"],
   [7, 8, 9, "X"],
@@ -13,7 +12,6 @@ const btnValues = [
   [1, 2, 3, "+"],
   [0, ".", "="],
 ];
-
 
 const toLocaleString = (num) =>
   String(num).replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, "$1 ");
@@ -23,7 +21,7 @@ const removeSpaces = (num) => num.toString().replace(/\s/g, "");
 const App = () => {
   let [calc, setCalc] = useState({
     sign: "",
-    num: 0,
+    num: "0",
     res: 0,
   });
 
@@ -31,7 +29,7 @@ const App = () => {
       e.preventDefault();
       const value = e.target.innerHTML;
 
-      if (calc.num.length < 16 ) {
+      if (!calc.num || calc.num?.length < 16 ) {
         setCalc({
          ...calc,
          num:
@@ -52,6 +50,7 @@ const App = () => {
       setCalc({
         ...calc,
         num: !calc.num.toString().includes(".") ? calc.num + value : calc.num,
+        res: !calc.sign ? 0 : calc.res
       });
     };
 
